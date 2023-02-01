@@ -484,6 +484,9 @@ static void init_global_link_mode_masks(void)
 		ETHTOOL_LINK_MODE_800000baseDR8_2_Full_BIT,
 		ETHTOOL_LINK_MODE_800000baseSR8_Full_BIT,
 		ETHTOOL_LINK_MODE_800000baseVR8_Full_BIT,
+		ETHTOOL_LINK_MODE_10baseT1S_Full_BIT,
+		ETHTOOL_LINK_MODE_10baseT1S_Half_BIT,
+		ETHTOOL_LINK_MODE_10baseT1S_P2MP_Half_BIT,
 	};
 	static const enum ethtool_link_mode_bit_indices
 		additional_advertised_flags_bits[] = {
@@ -738,6 +741,12 @@ static void dump_link_caps(const char *prefix, const char *an_prefix,
 		  "800000baseSR8/Full" },
 		{ 0, ETHTOOL_LINK_MODE_800000baseVR8_Full_BIT,
 		  "800000baseVR8/Full" },
+		{ 0, ETHTOOL_LINK_MODE_10baseT1S_Full_BIT,
+		  "10baseT1S/Full" },
+		{ 1, ETHTOOL_LINK_MODE_10baseT1S_Half_BIT,
+		  "10baseT1S/Half" },
+		{ 0, ETHTOOL_LINK_MODE_10baseT1S_P2MP_Half_BIT,
+		  "10baseT1S/Half" },
 	};
 	int indent;
 	int did1, new_line_pend;
