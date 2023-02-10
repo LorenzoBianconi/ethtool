@@ -51,6 +51,8 @@ int nl_grss(struct cmd_context *ctx);
 int nl_plca_get_cfg(struct cmd_context *ctx);
 int nl_plca_set_cfg(struct cmd_context *ctx);
 int nl_plca_get_status(struct cmd_context *ctx);
+int nl_get_mm(struct cmd_context *ctx);
+int nl_set_mm(struct cmd_context *ctx);
 
 void nl_monitor_usage(void);
 
@@ -122,6 +124,8 @@ nl_get_eeprom_page(struct cmd_context *ctx __maybe_unused,
 #define nl_plca_get_cfg		NULL
 #define nl_plca_set_cfg		NULL
 #define nl_plca_get_status	NULL
+#define nl_get_mm		NULL
+#define nl_set_mm		NULL
 
 #endif /* ETHTOOL_ENABLE_NETLINK */
 

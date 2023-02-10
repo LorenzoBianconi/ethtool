@@ -6102,6 +6102,22 @@ static const struct option args[] = {
 		.help	= "Get PLCA status information",
 	},
 	{
+		.opts	= "--show-mm",
+		.json	= true,
+		.nlfunc	= nl_get_mm,
+		.help	= "Show MAC merge layer state",
+	},
+	{
+		.opts	= "--set-mm",
+		.nlfunc	= nl_set_mm,
+		.help	= "Set MAC merge layer parameters",
+			  "		[ verify-enabled on|off ]\n"
+			  "		[ verify-time N ]\n"
+			  "		[ tx-enabled on|off ]\n"
+			  "		[ pmac-enabled on|off ]\n"
+			  "		[ tx-min-frag-size 60-252 ]\n"
+	},
+	{
 		.opts	= "-h|--help",
 		.no_dev	= true,
 		.func	= show_usage,
