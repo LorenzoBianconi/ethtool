@@ -505,6 +505,22 @@ ethtool \- query or control network driver and hardware settings
 .HP
 .B ethtool \-\-get\-plca\-status
 .I devname
+.HP
+.B ethtool \-\-show\-mm
+.I devname
+.HP
+.B ethtool \-\-set\-mm
+.I devname
+.RB [ verify\-enabled
+.BR on | off ]
+.RB [ verify\-time
+.BR N ]
+.RB [ tx\-enabled
+.BR on | off ]
+.RB [ pmac\-enabled
+.BR on | off ]
+.RB [ tx\-min\-frag\-size
+.BR N ]
 .
 .\" Adjust lines (i.e. full justification) and hyphenate.
 .ad
@@ -548,6 +564,15 @@ displaying relevant device statistics for selected get commands.
 .TP
 .B \-a \-\-show\-pause
 Queries the specified Ethernet device for pause parameter information.
+.RS 4
+.TP
+.A3 \fB\-\-src \fBaggregate\fP \fBemac\fP \fBpmac\fP
+If the MAC Merge layer is supported, request a particular source of device
+statistics (eMAC or pMAC, or their aggregate). Only valid if ethtool was
+invoked with the
+.B \-I \-\-include\-statistics
+argument.
+.RE
 .TP
 .B \-A \-\-pause
 Changes the pause parameters of the specified Ethernet device.
@@ -713,6 +738,10 @@ naming of NIC- and driver-specific statistics across vendors.
 .TP
 .B \fB\-\-groups [\fBeth\-phy\fP] [\fBeth\-mac\fP] [\fBeth\-ctrl\fP] [\fBrmon\fP]
 Request groups of standard device statistics.
+.TP
+.A3 \fB\-\-src \fBaggregate\fP \fBemac\fP \fBpmac\fP
+If the MAC Merge layer is supported, request a particular source of device
+statistics (eMAC or pMAC, or their aggregate).
 .RE
 .TP
 .B \-\-phy\-statistics
@@ -1592,6 +1621,84 @@ for PLCA burst mode to work as intended.
 Show the current PLCA status for the given interface. If \fBon\fR, the PHY is
 successfully receiving or generating the BEACON signal. If \fBoff\fR, the PLCA
 function is temporarily disabled and the PHY is operating in plain CSMA/CD mode.
+.RE
+.TP
+.B \-\-show\-mm
+Show the MAC Merge layer state. The ethtool argument
+.B \-I \-\-include\-statistics
+can be used with this command, and MAC Merge layer statistics counters will
+also be retrieved.
+.RS 4
+.TP
+.B pmac-enabled
+Shows whether the pMAC is enabled and capable of receiving traffic and SMD-V
+frames (and responding to them with SMD-R replies).
+.TP
+.B tx-enabled
+Shows whether transmission on the pMAC is administratively enabled.
+.TP
+.B tx-active
+Shows whether transmission on the pMAC is active (verification is either
+successful, or was disabled).
+.TP
+.B tx-min-frag-size
+Shows the minimum size (in octets) of transmitted non-final fragments which
+can be received by the link partner. Corresponds to the standard addFragSize
+variable using the formula:
+
+tx-min-frag-size = 64 * (1 + addFragSize) - 4
+.TP
+.B rx-min-frag-size
+Shows the minimum size (in octets) of non-final fragments which the local
+device supports receiving.
+.TP
+.B verify-enabled
+Shows whether the verification state machine is enabled. This process, if
+successful, ensures that preemptible frames transmitted by the local device
+will not be dropped as error frames by the link partner.
+.TP
+.B verify-time
+Shows the interval in ms between verification attempts, represented as an
+integer between 1 and 128 ms. The standard defines a fixed number of
+verification attempts (verifyLimit) before failing the verification process.
+.TP
+.B max-verify-time
+Shows the maximum value for verify-time accepted by the local device, which
+may be less than 128 ms.
+.TP
+.B verify-status
+Shows the current state of the verification state machine of the local device.
+Values can be
+.B INITIAL,
+.B VERIFYING,
+.B SUCCEEDED,
+.B FAILED
+or
+.B DISABLED.
+
+.RE
+.TP
+.B \-\-set\-mm
+Set the MAC Merge layer parameters.
+.RS 4
+.TP
+.A2 pmac-enabled \ on off
+Enable reception for the pMAC.
+.TP
+.A2 tx-enabled \ on off
+Administatively enable transmission for the pMAC.
+.TP
+.B tx-min-frag-size \ N
+Set the minimum size (in octets) of transmitted non-final fragments which can
+be received by the link partner.
+.TP
+.A2 verify-enabled \ on off
+Enable or disable the verification state machine.
+.TP
+.B verify-time \ N
+Set the interval in ms between verification attempts.
+
+.RE
 .SH BUGS
 Not supported (in part or whole) on all network drivers.
 .SH AUTHOR
