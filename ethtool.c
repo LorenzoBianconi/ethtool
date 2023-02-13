@@ -5748,7 +5748,7 @@ static const struct option args[] = {
 			  "		[ rx-jumbo N ]\n"
 			  "		[ tx N ]\n"
 			  "		[ rx-buf-len N]\n"
-			  "             [ cqe-size N]\n"
+			  "		[ cqe-size N]\n"
 			  "		[ tx-push on|off]\n"
 	},
 	{
@@ -5803,13 +5803,13 @@ static const struct option args[] = {
 		.opts	= "-p|--identify",
 		.func	= do_phys_id,
 		.help	= "Show visible port identification (e.g. blinking)",
-		.xhelp	= "               [ TIME-IN-SECONDS ]\n"
+		.xhelp	= "		[ TIME-IN-SECONDS ]\n"
 	},
 	{
 		.opts	= "-t|--test",
 		.func	= do_test,
 		.help	= "Execute adapter self test",
-		.xhelp	= "               [ online | offline | external_lb ]\n"
+		.xhelp	= "		[ online | offline | external_lb ]\n"
 	},
 	{
 		.opts	= "-S|--statistics",
@@ -5818,8 +5818,8 @@ static const struct option args[] = {
 		.nlchk	= nl_gstats_chk,
 		.nlfunc	= nl_gstats,
 		.help	= "Show adapter statistics",
-		.xhelp	= "               [ --all-groups | --groups [eth-phy] [eth-mac] [eth-ctrl] [rmon] ]\n"
-			  "               [ --src aggregate | emac | pmac ]\n"
+		.xhelp	= "		[ --all-groups | --groups [eth-phy] [eth-mac] [eth-ctrl] [rmon] ]\n"
+			  "		[ --src aggregate | emac | pmac ]\n"
 	},
 	{
 		.opts	= "--phy-statistics",
@@ -5890,7 +5890,7 @@ static const struct option args[] = {
 		.opts	= "-f|--flash",
 		.func	= do_flash,
 		.help	= "Flash firmware image from the specified file to a region on the device",
-		.xhelp	= "               FILENAME [ REGION-NUMBER-TO-FLASH ]\n"
+		.xhelp	= "		FILENAME [ REGION-NUMBER-TO-FLASH ]\n"
 	},
 	{
 		.opts	= "-P|--show-permaddr",
@@ -5921,10 +5921,10 @@ static const struct option args[] = {
 		.func	= do_schannels,
 		.nlfunc	= nl_schannels,
 		.help	= "Set Channels",
-		.xhelp	= "               [ rx N ]\n"
-			  "               [ tx N ]\n"
-			  "               [ other N ]\n"
-			  "               [ combined N ]\n"
+		.xhelp	= "		[ rx N ]\n"
+			  "		[ tx N ]\n"
+			  "		[ other N ]\n"
+			  "		[ combined N ]\n"
 	},
 	{
 		.opts	= "--show-priv-flags",
@@ -6047,7 +6047,7 @@ static const struct option args[] = {
 		.func	= do_perqueue,
 		.help	= "Apply per-queue command. ",
 		.xhelp	= "The supported sub commands include --show-coalesce, --coalesce"
-			  "             [queue_mask %x] SUB_COMMAND\n",
+			  "		[queue_mask %x] SUB_COMMAND\n",
 	},
 	{
 		.opts	= "--cable-test",
@@ -6091,12 +6091,12 @@ static const struct option args[] = {
 		.opts	= "--set-plca-cfg",
 		.nlfunc	= nl_plca_set_cfg,
 		.help	= "Set PLCA configuration",
-		.xhelp  = "             [ enable on|off ]\n"
-			  "             [ node-id N ]\n"
-			  "             [ node-cnt N ]\n"
-			  "             [ to-tmr N ]\n"
-			  "             [ burst-cnt N ]\n"
-			  "             [ burst-tmr N ]\n"
+		.xhelp  = "		[ enable on|off ]\n"
+			  "		[ node-id N ]\n"
+			  "		[ node-cnt N ]\n"
+			  "		[ to-tmr N ]\n"
+			  "		[ burst-cnt N ]\n"
+			  "		[ burst-tmr N ]\n"
 	},
 	{
 		.opts	= "--get-plca-status",
