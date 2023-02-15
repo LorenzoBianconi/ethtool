@@ -5747,10 +5747,10 @@ static const struct option args[] = {
 			  "		[ rx-mini N ]\n"
 			  "		[ rx-jumbo N ]\n"
 			  "		[ tx N ]\n"
-			  "		[ rx-buf-len N]\n"
-			  "		[ cqe-size N]\n"
-			  "		[ tx-push on|off]\n"
-			  "		[ rx-push on|off]\n"
+			  "		[ rx-buf-len N ]\n"
+			  "		[ cqe-size N ]\n"
+			  "		[ tx-push on|off ]\n"
+			  "		[ rx-push on|off ]\n"
 	},
 	{
 		.opts	= "-k|--show-features|--show-offload",
@@ -5860,7 +5860,7 @@ static const struct option args[] = {
 			  "			[ dst-mac %x:%x:%x:%x:%x:%x [m %x:%x:%x:%x:%x:%x] ]\n"
 			  "			[ action %d ] | [ vf %d queue %d ]\n"
 			  "			[ context %d ]\n"
-			  "			[ loc %d]] |\n"
+			  "			[ loc %d ] |\n"
 			  "		delete %d\n"
 	},
 	{
@@ -5992,16 +5992,16 @@ static const struct option args[] = {
 		.xhelp	= "		[ rx-copybreak ]\n"
 			  "		[ tx-copybreak ]\n"
 			  "		[ tx-buf-size ]\n"
-			  "		[ pfc-precention-tout ]\n"
+			  "		[ pfc-prevention-tout ]\n"
 	},
 	{
 		.opts	= "--set-tunable",
 		.func	= do_stunable,
 		.help	= "Set tunable",
-		.xhelp	= "		[ rx-copybreak N]\n"
-			  "		[ tx-copybreak N]\n"
-			  "		[ tx-buf-size N]\n"
-			  "		[ pfc-precention-tout N]\n"
+		.xhelp	= "		[ rx-copybreak N ]\n"
+			  "		[ tx-copybreak N ]\n"
+			  "		[ tx-buf-size N ]\n"
+			  "		[ pfc-prevention-tout N ]\n"
 	},
 	{
 		.opts	= "--reset",
@@ -6041,7 +6041,7 @@ static const struct option args[] = {
 		.func	= do_sfec,
 		.nlfunc	= nl_sfec,
 		.help	= "Set FEC settings",
-		.xhelp	= "		[ encoding auto|off|rs|baser|llrs [...]]\n"
+		.xhelp	= "		[ encoding auto|off|rs|baser|llrs [...] ]\n"
 	},
 	{
 		.opts	= "-Q|--per-queue",
