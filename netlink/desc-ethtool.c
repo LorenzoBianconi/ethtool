@@ -491,6 +491,12 @@ static const struct pretty_nla_desc __mm_desc[] = {
 	NLATTR_DESC_NESTED(ETHTOOL_A_MM_STATS, mm_stat),
 };
 
+static const struct pretty_nla_desc __xdp_features_desc[] = {
+	NLATTR_DESC_INVALID(ETHTOOL_A_XDP_FEATURES_UNSPEC),
+	NLATTR_DESC_NESTED(ETHTOOL_A_XDP_FEATURES_HEADER, header),
+	NLATTR_DESC_NESTED(ETHTOOL_A_XDP_FEATURES_DATA, bitset),
+};
+
 const struct pretty_nlmsg_desc ethnl_umsg_desc[] = {
 	NLMSG_DESC_INVALID(ETHTOOL_MSG_USER_NONE),
 	NLMSG_DESC(ETHTOOL_MSG_STRSET_GET, strset),
@@ -536,6 +542,7 @@ const struct pretty_nlmsg_desc ethnl_umsg_desc[] = {
 	NLMSG_DESC(ETHTOOL_MSG_PLCA_GET_STATUS, plca),
 	NLMSG_DESC(ETHTOOL_MSG_MM_GET, mm),
 	NLMSG_DESC(ETHTOOL_MSG_MM_SET, mm),
+	NLMSG_DESC(ETHTOOL_MSG_XDP_FEATURES_GET, xdp_features),
 };
 
 const unsigned int ethnl_umsg_n_desc = ARRAY_SIZE(ethnl_umsg_desc);
@@ -585,6 +592,7 @@ const struct pretty_nlmsg_desc ethnl_kmsg_desc[] = {
 	NLMSG_DESC(ETHTOOL_MSG_PLCA_NTF, plca),
 	NLMSG_DESC(ETHTOOL_MSG_MM_GET_REPLY, mm),
 	NLMSG_DESC(ETHTOOL_MSG_MM_NTF, mm),
+	NLMSG_DESC(ETHTOOL_MSG_XDP_FEATURES_GET_REPLY, xdp_features),
 };
 
 const unsigned int ethnl_kmsg_n_desc = ARRAY_SIZE(ethnl_kmsg_desc);

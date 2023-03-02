@@ -504,6 +504,9 @@ ethtool \- query or control network driver and hardware settings
 .BN burst\-cnt N
 .BN burst\-tmr N
 .HP
+.B ethtool \-\-get\-xdp\-features
+.I devname
+.HP
 .B ethtool \-\-get\-plca\-status
 .I devname
 .HP
@@ -1562,6 +1565,9 @@ administratively up and to low power mode when the last port using it is put
 administratively down. The power mode policy can be set before a module is
 plugged-in.
 .RE
+.TP
+.B \-\-get\-xdp\-features
+Queries the specified network device for the supported XDP features.
 .TP
 .B \-\-get\-plca\-cfg
 Show the current PLCA parameters for the given interface.

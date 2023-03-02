@@ -138,6 +138,14 @@ struct feature_defs {
 #define FEATURE_BIT_IS_SET(blocks, index, field)		\
 	(FEATURE_WORD(blocks, index, field) & FEATURE_FIELD_FLAG(index))
 
+struct xdp_feature_defs {
+	size_t n_features;
+	char name[][ETH_GSTRING_LEN];
+};
+
+#define XDP_FEATURE_BIT_IS_SET(blocks, index)		\
+	(((blocks)[(index) / 32U]) & FEATURE_FIELD_FLAG(index))
+
 static long long
 get_int_range(char *str, int base, long long min, long long max)
 {
@@ -2679,6 +2687,90 @@ err:
 	free(efeatures);
 
 	return rc;
+}
+
+static struct xdp_feature_defs *get_xdp_feature_defs(struct cmd_context *ctx)
+{
+	struct ethtool_gstrings *names;
+	struct xdp_feature_defs *defs;
+	size_t i;
+
+	names = get_stringset(ctx, ETH_SS_XDP_FEATURES, 0, 1);
+	if (!names)
+		return NULL;
+
+	defs = malloc(sizeof(*defs) + ETH_GSTRING_LEN * names->len);
+	if (!defs)
+		goto out;
+
+	defs->n_features = names->len;
+	for (i = 0; i < defs->n_features; i++)
+		memcpy(defs->name[i], names->data + i * ETH_GSTRING_LEN,
+		       ETH_GSTRING_LEN);
+out:
+	free(names);
+
+	return defs;
+}
+
+static struct ethtool_xdp_gfeatures *
+get_xdp_features(struct cmd_context *ctx, struct xdp_feature_defs *defs)
+{
+	struct ethtool_xdp_gfeatures *features;
+
+	features = malloc(sizeof(*features) +
+			  FEATURE_BITS_TO_BLOCKS(defs->n_features) *
+			  sizeof(features->features[0]));
+	if (!features)
+		return NULL;
+
+	features->cmd = ETHTOOL_XDP_GFEATURES;
+	features->size = FEATURE_BITS_TO_BLOCKS(defs->n_features);
+	if (send_ioctl(ctx, features)) {
+		free(features);
+		return NULL;
+	}
+
+	return features;
+}
+
+static int do_xdp_gfeatures(struct cmd_context *ctx)
+{
+	struct ethtool_xdp_gfeatures *features;
+	struct xdp_feature_defs *defs;
+	size_t i;
+
+	if (ctx->argc != 0)
+		exit_bad_args();
+
+	defs = get_xdp_feature_defs(ctx);
+	if (!defs) {
+		perror("Cannot get device XDP feature names");
+		return 1;
+	}
+
+	fprintf(stdout, "XDP features for %s:\n", ctx->devname);
+
+	features = get_xdp_features(ctx, defs);
+	if (!features) {
+		fprintf(stdout, "no XDP feature info available\n");
+		free(defs);
+		return 1;
+	}
+
+	for (i = 0; i < defs->n_features; i++) {
+		if (!defs->name[i][0])
+			continue;
+
+		printf("%s: %s\n", defs->name[i],
+		       XDP_FEATURE_BIT_IS_SET(features->features, i)
+		       ? "supported" : "not supported");
+	}
+
+	free(features);
+	free(defs);
+
+	return 0;
 }
 
 static struct ethtool_link_usettings *
@@ -6119,6 +6211,12 @@ static const struct option args[] = {
 			  "		[ tx-enabled on|off ]\n"
 			  "		[ pmac-enabled on|off ]\n"
 			  "		[ tx-min-frag-size 60-252 ]\n"
+	},
+	{
+		.opts	= "--get-xdp-features",
+		.func	= do_xdp_gfeatures,
+		.nlfunc	= nl_get_xdp_features,
+		.help	= "Get XDP features supported by the NIC"
 	},
 	{
 		.opts	= "-h|--help",
